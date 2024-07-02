@@ -8,18 +8,19 @@ export const read = async () => {
   let message =
     "З усіх значень у Вашому файлі отримано числа та розраховано запитувані параметри";
 
-    let resp = {};
+  let resp = {};
+
   try {
-    const text = await fs.readFile("./files/numbers.txt", "utf-8");
+    const text = await fs.readFile("./uploads/uploaded_file.txt", "utf-8");
     if (!text.trim()) {
       throw new Error("У завантаженому файлі чисел не знайдено");
     }
 
-    const numbers = text.split("\n").map((num) => parseInt(num));
+    const numbers = text.split(/[,\s\n]+/).map((num) => parseInt(num));
     const filteredNumbers = numbers.filter((num) => {
       if (isNaN(num)) {
         message =
-          "У Вашому списку виявлено нечислові символи. Вони будуть виключені з розрахунку запитуваних параметрів";
+          "У Вашому списку виявлено нечислові символи. Вони були виключені з розрахунку запитуваних параметрів";
       }
       return !isNaN(num);
     });
@@ -50,18 +51,18 @@ export const read = async () => {
 
     let average = accumulator / filteredNumbers.length;
 
-     resp = {
+    resp = {
       message,
       mediana,
       average,
       max,
-      min
-    }; 
-   console.log(resp)
+      min,
+    };
   } catch (error) {
     console.error("Помилка:", error.message);
   }
+
   return resp;
 };
 
-read ()
+read();
