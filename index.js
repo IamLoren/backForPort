@@ -1,7 +1,7 @@
 import { log } from "console";
 import fs from "fs/promises";
 
-export const read = async () => {
+export const read = async (text) => {
   let accumulator = 0;
   let sum = 0;
   let mediana;
@@ -11,7 +11,6 @@ export const read = async () => {
   let resp = {};
 
   try {
-    const text = await fs.readFile("./uploads/uploaded_file.txt", "utf-8");
     if (!text.trim()) {
       throw new Error("У завантаженому файлі чисел не знайдено");
     }
@@ -34,7 +33,6 @@ export const read = async () => {
 
       if (length % 2 === 0 && (i === length / 2 - 1 || i === length / 2)) {
         sum += filteredNumbers[i];
-        console.log(sum);
         mediana = sum / 2;
       } else if (length % 2 !== 0) {
         let index = Math.floor((filteredNumbers.length - 1) / 2);
