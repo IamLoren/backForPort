@@ -61,4 +61,4 @@ app.post("/send", upload.single("file"), (request, response) => {
   }
 });
 
-app.listen(4000, () => console.log("Server is running on 4000 PORT"));
+app.listen(process.env.PORT || 4000, () => console.log("Server is running on 4000 PORT"));
